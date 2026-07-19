@@ -1,141 +1,319 @@
 # Law Society Web Intern Test
 
-Responsive implementation of the supplied Law Society homepage mockup using Next.js, TypeScript, Tailwind CSS, local Figma assets, and the Guardian Open Platform.
+A responsive implementation of the supplied Law Society homepage mockup, built with Next.js, TypeScript, Tailwind CSS, local Figma assets, and the Guardian Open Platform API.
 
-## Implemented scope
+## Live Demo
 
-- Desktop homepage based on the 1440 × 5602 Figma frame.
-- Mobile homepage based on the 402 × 5602 Figma frame.
-- Scrollable desktop mega-navigation and full-screen mobile navigation.
-- Data-driven navigation categories, submenus, destination search, and real links.
-- Responsive statutory-functions grid, anniversary feature, Road to 2027, Legal Support, Media & Press, career banner, and footer.
-- Guardian-powered carousel with fixture mode, loading, error, retry, keyboard controls, autoplay, independent pause states, and 1/2/3-card behavior.
-- Accessible dialogs with Escape handling, focus containment, body-scroll lock, focus restoration, and defensive close fallbacks.
+https://law-society-intern-test.vercel.app/
 
-## Stack
+## Overview
+
+This project recreates the supplied Law Society homepage design for desktop and mobile while adding functional navigation, responsive content sections, accessible dialogs, and a live news carousel.
+
+The implementation focuses on:
+
+- Visual fidelity to the supplied Figma design
+- Responsive behavior across desktop, tablet, and mobile
+- Accessible keyboard and dialog interactions
+- Server-side Guardian API integration
+- Local production assets without temporary Figma URLs
+- Reliable loading, error, retry, and fixture states
+
+## Implemented Features
+
+### Responsive layout
+
+- Desktop homepage based on the `1440 × 5602` Figma frame
+- Mobile homepage based on the `402 × 5602` Figma frame
+- Responsive behavior for desktop, tablet, and mobile viewports
+- Twenty-two local Figma assets stored in `public/figma`
+
+### Navigation
+
+- Scrollable desktop mega-menu
+- Full-screen mobile navigation
+- Data-driven primary navigation and submenus
+- Search across available navigation destinations
+- Mouse, focus, click, and keyboard interaction
+- Focus trapping and focus restoration
+- Escape, close-button, and backdrop dismissal
+- Body-scroll locking while the navigation is open
+
+### Homepage sections
+
+- Hero section
+- Statutory-functions grid
+- 60th-anniversary feature
+- Road to 2027 timeline
+- Legal Support directory
+- Media & Press carousel
+- Career-support banner
+- Responsive footer
+
+### Guardian news carousel
+
+- Guardian Open Platform integration
+- Server-side API requests
+- Fixture mode for deterministic review
+- Loading, error, and retry states
+- Previous and next controls
+- Keyboard controls
+- Autoplay with independent pause states
+- Responsive card count:
+  - 3 cards on desktop
+  - 2 cards on tablet
+  - 1 card on mobile
+- Article links open the original Guardian website
+
+### Accessibility
+
+- Semantic interactive elements
+- Keyboard-accessible navigation and carousel controls
+- Accessible dialogs
+- Focus containment
+- Focus restoration
+- Escape-key handling
+- Body-scroll locking
+- Defensive close fallbacks
+- ARIA labels and state attributes
+
+## Technology Stack
 
 - Next.js App Router
 - React
 - TypeScript
-- Tailwind CSS v4 plus project-specific responsive CSS
+- Tailwind CSS v4
 - Guardian Open Platform API
+- ESLint
+- Node.js
+- Vercel
 
 ## Requirements
 
-- Node.js 22 LTS recommended; minimum Node.js 20.9.
-- npm 10 or 11.
-- The 22 supplied design assets must exist in `public/figma`.
+- Node.js 20.9 or newer
+- Node.js 22 LTS recommended
+- npm 10 or 11
+- All required design assets available in `public/figma`
 
-## Setup
+## Local Setup
 
-```powershell
+Install dependencies:
+
+```bash
 npm ci
+```
+
+Verify the local Figma assets:
+
+```bash
 npm run figma:verify
 ```
 
-`figma:verify` is cross-platform and verifies that every required local design asset exists and is non-empty. Production does not fetch images from temporary Figma URLs.
+The verification command confirms that every required design asset exists and is not empty. Production does not depend on temporary Figma asset URLs.
 
-### Configure news data
+## Environment Variables
 
-Create `.env.local` without exposing its contents:
+Create `.env.local` from the provided example file.
+
+### Windows PowerShell
 
 ```powershell
 Copy-Item .env.example .env.local
 ```
 
-For deterministic UI review:
+### macOS or Linux
+
+```bash
+cp .env.example .env.local
+```
+
+### Fixture mode
+
+Use fixture mode for deterministic local testing:
 
 ```env
 GUARDIAN_API_KEY=
 NEWS_USE_FIXTURE=true
 ```
 
-For live news:
+### Live Guardian data
 
 ```env
-GUARDIAN_API_KEY=your_key_here
+GUARDIAN_API_KEY=your_guardian_api_key
 NEWS_USE_FIXTURE=false
 ```
 
-`GUARDIAN_API_KEY` is server-only. Never prefix it with `NEXT_PUBLIC_`, commit `.env.local`, or place the value in source code.
+`GUARDIAN_API_KEY` is server-only.
 
-## Run locally
+Do not:
 
-```powershell
+- Prefix it with `NEXT_PUBLIC_`
+- Commit `.env.local`
+- Place the key directly in source code
+- Expose the key in client-side JavaScript
+
+## Run Locally
+
+```bash
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open:
 
-## Desktop navigation operation
+```text
+http://localhost:3000
+```
 
-- Mouse movement or focus over a primary category updates the secondary column.
-- Clicking a primary category with children selects it without closing the desktop drawer.
-- The drawer scrolls vertically on short desktop and tablet viewports.
-- `Arrow Up` / `Arrow Down` move within a menu column.
-- `Home` / `End` jump to the first or last item.
-- `Arrow Right` moves from a primary category into its submenu.
-- `Arrow Left` returns from the submenu to the active primary category.
-- `Tab` remains contained inside the dialog.
-- `Escape`, the close button, or the dimmed backdrop closes the menu and returns focus to the hamburger.
-- Search filters all known navigation destinations; Enter opens the first result.
+News API endpoint:
 
-## Verification commands
+```text
+http://localhost:3000/api/news
+```
 
-```powershell
+## Desktop Navigation Controls
+
+The desktop navigation supports mouse, focus, click, and keyboard interaction.
+
+- Hovering or focusing a primary category updates its submenu
+- Clicking a primary category selects it without closing the drawer
+- The drawer scrolls vertically on shorter desktop and tablet screens
+- `Arrow Up` and `Arrow Down` move within the current menu column
+- `Home` and `End` move to the first or last item
+- `Arrow Right` moves into the active submenu
+- `Arrow Left` returns to the active primary category
+- `Tab` and `Shift + Tab` remain contained inside the dialog
+- `Escape` closes the navigation
+- The close button and dimmed backdrop also close the navigation
+- Focus returns to the hamburger button after closing
+- Search filters available navigation destinations
+- `Enter` opens the first matching result
+
+## API Behavior
+
+The browser requests:
+
+```text
+/api/news
+```
+
+The route handler:
+
+1. Reads the Guardian API key on the server
+2. Requests recent Guardian content
+3. Enforces a 10-second timeout
+4. Validates the upstream response
+5. Normalizes the data into an internal article format
+6. Requires at least six usable articles
+7. Returns a stable response contract to the client
+
+Fixture mode provides deterministic content for development and review.
+
+Missing configuration returns HTTP `503` with an actionable error message. Guardian or network failures remain contained inside the Media & Press section and do not break the rest of the homepage.
+
+## Verification
+
+Run the standard checks:
+
+```bash
 npm run check
 npm run audit:source
 npm run smoke:server
 ```
 
-Run the complete local gate:
+Run the complete verification pipeline:
 
-```powershell
+```bash
 npm run verify
 ```
 
-`verify` performs:
+The verification pipeline includes:
 
-1. Figma asset integrity check.
-2. ESLint.
-3. TypeScript validation.
-4. Production build.
-5. Static operational/security contract audit.
-6. Production-server smoke tests for the homepage, fixture API, and missing-key API failure.
+1. Figma asset integrity verification
+2. ESLint
+3. TypeScript validation
+4. Production build
+5. Static operational and security checks
+6. Homepage server smoke tests
+7. Fixture API behavior
+8. Missing API-key failure behavior
+9. Core DOM interaction checks
 
-Dependency audit remains a separate network-backed check:
+Run the production dependency audit separately:
 
-```powershell
+```bash
 npm audit --omit=dev
 ```
 
-## Manual browser matrix
+## Manual Browser Test Matrix
 
-Use DevTools and complete `docs/functional-test-plan.md`:
+The complete manual checklist is available in:
 
-- Desktop: 1440 × 900.
-- Short desktop/tablet: 1024 × 768.
-- Mobile: 402 × 874 and 390 × 844.
+```text
+docs/functional-test-plan.md
+```
 
-The 1024 × 768 test is mandatory because it verifies that the desktop drawer can scroll to `Advertise` and that active submenus remain reachable.
+Recommended viewport sizes:
 
-## API behavior
+| Device | Viewport |
+|---|---:|
+| Desktop | 1440 × 900 |
+| Short desktop / tablet | 1024 × 768 |
+| Mobile reference | 402 × 874 |
+| Common mobile | 390 × 844 |
 
-The browser requests `/api/news`. The route handler calls Guardian server-side, validates and normalizes the response, enforces a 10-second timeout, requires at least six articles, and returns a stable internal data contract. Fixture mode provides deterministic review. Missing configuration returns HTTP 503 with an actionable message; upstream failures remain contained inside Media & Press.
+The `1024 × 768` test verifies that the desktop navigation drawer can scroll to the final menu items and that all active submenus remain reachable.
 
 ## Deployment
 
-Vercel is recommended.
+The application is deployed on Vercel:
 
-1. Commit the reviewed source and the local `public/figma` assets.
-2. Push to a public GitHub repository.
-3. Import the repository into Vercel.
-4. Add `GUARDIAN_API_KEY` and set `NEWS_USE_FIXTURE=false`.
-5. Redeploy.
-6. Run the production checks in `docs/functional-test-plan.md` against both `/` and `/api/news`.
+https://law-society-intern-test.vercel.app/
 
-## Known limitations
+Required Vercel environment variables:
 
-- The Figma test case contains placeholder hero copy; it is retained for visual fidelity.
-- The anniversary frame provides a play control and poster but no approved video file or URL. The control opens an accessible explanatory dialog instead of embedding invented media.
-- Google Fonts use system fallbacks when font delivery is blocked.
+```env
+GUARDIAN_API_KEY=your_guardian_api_key
+NEWS_USE_FIXTURE=false
+```
+
+After changing an environment variable, redeploy the project so the new value is applied.
+
+Production verification should cover:
+
+```text
+/
+/api/news
+```
+
+Expected production behavior:
+
+- Homepage returns HTTP `200`
+- News API returns HTTP `200`
+- News source is `guardian`
+- At least six articles are returned
+- Local Figma assets load correctly
+- Desktop and mobile navigation work correctly
+- Carousel controls work correctly
+- No horizontal overflow is present
+- No critical browser-console errors are present
+
+## Known Limitations
+
+- The supplied Figma design contains placeholder hero copy, which is retained for visual fidelity
+- The anniversary section contains a play control and poster, but no approved video file or URL was supplied; the control therefore opens an accessible explanatory dialog
+- Google Fonts fall back to system fonts when external font delivery is blocked
+- Navigation destinations are demonstration links based on the supplied test design and available public Law Society destinations
+
+## Security Notes
+
+- Guardian API requests run only on the server
+- `.env.local` is excluded from Git
+- The Guardian API key is not exposed through public environment variables
+- Temporary Figma asset URLs are not used in production
+- External article links point to the original Guardian website
+
+## License
+
+This project was created for a web-development technical assessment.
+
+The supplied Law Society design, branding, and visual assets remain the property of their respective owners.
