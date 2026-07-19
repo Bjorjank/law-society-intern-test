@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Singapore civic architecture</title>
+  <desc id="desc">A stylised architectural scene with columns, city buildings and warm evening light.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5d1717"/>
+      <stop offset="0.48" stop-color="#982c24"/>
+      <stop offset="1" stop-color="#c6844b"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3ca83" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#4b1a1a" stop-opacity=".65"/>
+    </linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f2dfbd"/>
+      <stop offset="1" stop-color="#a96e42"/>
+    </linearGradient>
+    <radialGradient id="sun">
+      <stop offset="0" stop-color="#ffd98b" stop-opacity=".95"/>
+      <stop offset=".5" stop-color="#e3a64f" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#e3a64f" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1130" cy="220" r="210" fill="url(#sun)" filter="url(#blur)"/>
+  <g opacity=".28" fill="#2a0d0d">
+    <path d="M0 620h150v-250h90v250h90v-330h110v330h85v-210h130v210h80v-380h115v380h80v-290h130v290h100v-220h120v220h140v280H0z"/>
+  </g>
+  <g opacity=".58">
+    <path d="M780 198h110v474H780z" fill="url(#glass)"/>
+    <path d="M925 95h150v577H925z" fill="url(#glass)"/>
+    <path d="M1105 255h104v417h-104z" fill="url(#glass)"/>
+    <path d="M1236 155h138v517h-138z" fill="url(#glass)"/>
+    <g stroke="#f9d99e" stroke-opacity=".38" stroke-width="3">
+      <path d="M806 198v474M835 198v474M864 198v474"/>
+      <path d="M955 95v577M990 95v577M1025 95v577M1058 95v577"/>
+      <path d="M1265 155v517M1302 155v517M1340 155v517"/>
+    </g>
+  </g>
+  <g transform="translate(660 385)">
+    <path d="M40 0h780l75 72H0z" fill="#f0ddbc"/>
+    <path d="M20 72h850v40H20z" fill="#b2784e"/>
+    <g fill="url(#stone)">
+      <path d="M70 112h92v330H70z"/>
+      <path d="M230 112h92v330h-92z"/>
+      <path d="M390 112h92v330h-92z"/>
+      <path d="M550 112h92v330h-92z"/>
+      <path d="M710 112h92v330h-92z"/>
+    </g>
+    <g fill="#6e351f" opacity=".45">
+      <path d="M87 112h17v330H87zM247 112h17v330h-17zM407 112h17v330h-17zM567 112h17v330h-17zM727 112h17v330h-17z"/>
+    </g>
+    <path d="M32 442h826v48H32z" fill="#8c4b31"/>
+  </g>
+  <path d="M0 760c330-70 670-76 1000-18 218 39 408 40 600-12v170H0z" fill="#240909" opacity=".78"/>
+  <g opacity=".16" stroke="#fff1ce" stroke-width="1">
+    <path d="M0 140 1600 610M0 290l1600 470M210 0l650 900M700 0l650 900"/>
+  </g>
+</svg>
