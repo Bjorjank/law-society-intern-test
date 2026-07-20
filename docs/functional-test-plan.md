@@ -106,3 +106,45 @@ Run the matrix in current Chrome/Edge and one additional browser when available.
 ## 9. Production verification
 
 Repeat sections 2, 3, 4, 6, and 7 against the deployed URL. Verify that the deployment environment uses live Guardian configuration and contains no fixture-only behavior unless explicitly documented.
+## Horizontal overflow and hero validation
+
+Run these checks at `360 × 800`, `390 × 844`, `402 × 874`, `768 × 1024`, `1024 × 768`, and `1440 × 900`:
+
+- `document.documentElement.scrollWidth` must equal `document.documentElement.clientWidth` outside the Media & Press carousel.
+- Swiping horizontally on blank page areas must not move the document.
+- The Media & Press track must remain horizontally swipeable on mobile.
+- The hero background must preserve its aspect ratio and crop inside the content area without stretching.
+- The career banner, anniversary ribbon, and tablet Road to 2027 years must not create page-level overflow.
+- `/api/health` must return HTTP 200, `status: ok`, and no secret values.
+
+
+## 10. Career overlap regression test
+
+At `1440 × 900` and `1024 × 768`:
+
+- The Career section itself remains 200px high.
+- The phone/person artwork extends upward into Media & Press.
+- All three circular orbit controls are visible.
+- The artwork does not extend beyond the viewport’s left or right edge.
+- The footer begins immediately after the 200px Career banner.
+
+At `768 × 1024`:
+
+- The device is scaled and anchored to the bottom-right.
+- Career copy remains readable and does not collide with the device.
+- All three orbit controls remain visible.
+
+At `360 × 800`, `390 × 844`, and `402 × 874`:
+
+- The device stays inside the 515px Career section.
+- The maroon panel spans exactly the viewport width.
+- The document cannot be swiped horizontally.
+
+## 11. Mobile hero regression test
+
+At `360`, `390`, and `402px` widths:
+
+- The hero control rail remains 105px wide.
+- The background image uses the wide Figma-derived crop inside the remaining content frame.
+- The city and Lady Justice composition is cropped, not stretched.
+- The wide image must not increase `document.documentElement.scrollWidth`.

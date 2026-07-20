@@ -14,14 +14,31 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  width: 100%;
+  max-width: 100%;
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
 body {
+  width: 100%;
+  max-width: 100%;
   margin: 0;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--body-font);
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;
+}
+main {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+@supports not (overflow: clip) {
+  html, body, main { overflow-x: hidden; }
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -417,13 +434,17 @@ button:disabled { cursor: not-allowed; }
   overflow: hidden;
   background: var(--mist);
 }
-.hero-city {
+.hero-city-frame {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+}
+.hero-city {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center bottom;
+  aspect-ratio: auto;
   filter: blur(1px) grayscale(.7);
 }
 .hero-wash {
@@ -851,12 +872,13 @@ button:disabled { cursor: not-allowed; }
   max-width: 1440px;
   margin: 0 auto;
   overflow: visible;
+  isolation: isolate;
   background: var(--mist);
 }
 .career-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .4; }
 .career-maroon {
   position: absolute;
-  right: -11px;
+  right: 0;
   top: 0;
   width: 758px;
   height: 200px;
@@ -934,11 +956,41 @@ button:disabled { cursor: not-allowed; }
   .hero-copy h1 { font-size: clamp(52px, 5vw, 68px); }
   .hero-copy h1 span:nth-child(2) { padding-left: 10%; }
   .hero-justice { left: 0; width: 48%; }
+  .road-heading { display: block; }
+  .road-years { margin-top: 32px; justify-content: flex-start; flex-wrap: wrap; }
   .road-content { grid-template-columns: 52% 1fr; }
   .road-content img { width: 100%; }
   .navigation-dialog { width: calc(100% - 220px); min-width: 760px; }
   .news-card-basis { flex-basis: calc((100% - 40px) / 2); }
   .press-track { gap: 40px; }
+  .career-device { left: auto; right: 0; }
+  .career-maroon { width: min(758px, 59vw); }
+}
+
+@media (min-width: 768px) and (max-width: 899px) {
+  .career-copy {
+    left: 48px;
+    top: 48px;
+    width: 350px;
+    gap: 18px;
+  }
+  .career-copy h2 { font-size: 23px; }
+  .career-copy p { font-size: 15px; line-height: 25px; }
+  .career-device {
+    right: 0;
+    transform: scale(.74);
+    transform-origin: bottom right;
+  }
+  .career-maroon { width: 52%; }
+}
+
+@media (min-width: 900px) and (max-width: 1099px) {
+  .career-copy { left: 72px; }
+  .career-device {
+    right: 0;
+    transform: scale(.9);
+    transform-origin: bottom right;
+  }
 }
 
 @media (max-width: 767px) {
@@ -973,12 +1025,21 @@ button:disabled { cursor: not-allowed; }
   .navigation-scales { width: 577px; height: 646px; right: -175px; bottom: 0; opacity: .3; }
 
   .hero-section { width: 100%; height: 874px; }
-  .hero-city { width: 1398px; max-width: none; left: -447px; object-position: center bottom; }
+  .hero-city-frame { right: 105px; }
+  .hero-city {
+    position: absolute;
+    top: 0;
+    left: -447px;
+    width: 1398px;
+    max-width: none;
+    height: 874px;
+    object-position: center bottom;
+  }
   .hero-wash { right: 105px; background: linear-gradient(90deg, rgba(222,226,230,.48), rgba(249,249,249,.3)), linear-gradient(140deg, transparent 62%, rgba(170,4,51,.45) 83%); }
   .hero-maroon-shape { top: 443px; left: -33px; width: 178px; height: 393px; }
   .hero-justice { top: 420px; left: -13px; width: 296px; height: 454px; }
-  .hero-copy { top: 132px; left: 28px; width: 255px; }
-  .hero-copy h1 { font-size: 36px; line-height: 1.47; }
+  .hero-copy { top: 132px; left: 28px; width: min(255px, calc(100% - 133px)); }
+  .hero-copy h1 { font-size: clamp(32px, 9vw, 36px); line-height: 1.47; }
   .hero-copy h1 span:nth-child(2) { padding-left: 16px; }
   .hero-copy p { height: 89px; margin: 13px 0 20px; overflow: hidden; font-size: 16px; line-height: 30px; }
   .torn-edge-bottom { height: 75px; }
@@ -1005,8 +1066,8 @@ button:disabled { cursor: not-allowed; }
 
   .anniversary-section { height: 855px; }
   .anniversary-section > img { width: 1440px; max-width: none; left: 50%; transform: translateX(-50%); object-position: center; }
-  .anniversary-ribbon { top: 312px; left: 29px; width: 344px; height: 90px; }
-  .anniversary-title { top: 226px; width: 344px; height: 262px; display: flex; flex-direction: column; justify-content: flex-start; }
+  .anniversary-ribbon { top: 312px; left: 29px; right: 29px; width: auto; height: 90px; }
+  .anniversary-title { top: 226px; width: calc(100% - 58px); height: 262px; display: flex; flex-direction: column; justify-content: flex-start; }
   .anniversary-title > span { font-size: 32px; }
   .anniversary-title > span:first-child { margin-bottom: 3px; }
   .anniversary-title > span:last-child { margin-top: -1px; }
@@ -1019,7 +1080,7 @@ button:disabled { cursor: not-allowed; }
   .road-section { padding: 47px 29px 74px; }
   .road-heading { display: block; }
   .road-heading h2 { margin-top: 15px; font-size: 24px; line-height: 1.5; }
-  .road-years { margin-top: 57px; justify-content: space-between; gap: 0; padding: 0; font-size: 42px; }
+  .road-years { margin-top: 57px; justify-content: space-between; flex-wrap: nowrap; gap: 0; padding: 0; font-size: clamp(34px, 10.5vw, 42px); min-width: 0; }
   .road-years span { font-size: 12px; }
   .road-rule { margin: 42px 0 24px; }
   .road-content { display: flex; flex-direction: column; gap: 45px; }
@@ -1052,8 +1113,8 @@ button:disabled { cursor: not-allowed; }
   .press-more { margin-top: 15px; font-size: 16px; }
   .skeleton-image { height: 164px; }
 
-  .career-section { height: 515px; width: 100%; }
-  .career-maroon { left: -131px; right: auto; top: auto; bottom: 0; width: 592px; height: 146px; clip-path: none; }
+  .career-section { height: 515px; width: 100%; overflow: hidden; isolation: isolate; }
+  .career-maroon { left: 0; right: 0; top: auto; bottom: 0; width: 100%; height: 146px; clip-path: none; }
   .career-copy { top: 37px; left: 50%; transform: translateX(-50%); width: 270px; display: block; }
   .career-icon { display: block; margin-bottom: 15px; font-size: 25px; }
   .career-copy h2 { font-size: 24px; }
@@ -1067,12 +1128,26 @@ button:disabled { cursor: not-allowed; }
 
   .footer-main { height: 236px; gap: 30px; }
   .footer-main img { width: 221px; height: 90px; }
-  .footer-main nav { width: 342px; flex-wrap: wrap; justify-content: center; gap: 5px 10px; font-size: 16px; line-height: 30px; }
+  .footer-main nav { width: 342px; max-width: calc(100% - 32px); flex-wrap: wrap; justify-content: center; gap: 5px 10px; font-size: 16px; line-height: 30px; }
   .footer-main nav span { gap: 10px; }
   .footer-main nav i { font-size: 16px; }
   .footer-bottom { height: 122px; padding: 25px 30px; flex-direction: column; justify-content: flex-start; gap: 0; text-align: center; font-size: 12px; line-height: 20px; }
   .footer-bottom p:first-child { width: 248px; }
   .footer-bottom p:last-child { line-height: 30px; }
+}
+
+@media (max-width: 374px) {
+  .site-logo { left: 24px; width: 150px; }
+  .hero-copy { left: 24px; width: calc(100% - 129px); }
+  .hero-copy h1 { font-size: 31px; }
+  .hero-copy h1 span:nth-child(2) { padding-left: 8px; }
+  .functions-intro,
+  .press-heading-row { width: calc(100% - 48px); }
+  .road-section,
+  .legal-section { padding-left: 24px; padding-right: 24px; }
+  .press-track { padding-left: 24px; padding-right: 24px; }
+  .anniversary-ribbon { left: 24px; right: 24px; }
+  .anniversary-title { width: calc(100% - 48px); }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -33,10 +33,64 @@ const header = await read("src/components/header.tsx");
 const anniversary = await read("src/components/anniversary-banner.tsx");
 const carousel = await read("src/components/news-carousel.tsx");
 const apiRoute = await read("src/app/api/news/route.ts");
+const healthRoute = await read("src/app/api/health/route.ts");
+const nextConfig = await read("next.config.ts");
+const hero = await read("src/components/hero.tsx");
 const navigation = await read("src/data/navigation.ts");
 const gitignore = await read(".gitignore");
 const envExample = await read(".env.example");
 const packageJson = JSON.parse(await read("package.json"));
+
+
+record(
+  "RESPONSIVE_OVERFLOW_GUARD",
+  css.includes("html, body, main { overflow-x: hidden; }")
+    && css.includes("overflow-x: clip")
+    && css.includes("overflow-y: visible")
+    && css.includes("overscroll-behavior-x: none")
+    && css.includes(".career-section { height: 515px; width: 100%; overflow: hidden; isolation: isolate; }")
+    && css.includes("left: 0; right: 0")
+    && !css.includes("left: -24px; right: -24px"),
+  "The document clips accidental horizontal overflow while preserving intentional vertical overlap on desktop and bounding mobile decoration inside the viewport.",
+);
+record(
+  "CAREER_OVERLAP_CONTRACT",
+  css.includes(".career-section {")
+    && css.includes("overflow: visible")
+    && css.includes("isolation: isolate")
+    && css.includes("height: 355px")
+    && css.includes("transform-origin: bottom right"),
+  "Desktop career artwork can overlap the preceding section vertically, while tablet layouts scale from the bottom-right without leaving the viewport.",
+);
+record(
+  "HERO_CROP_CONTRACT",
+  hero.includes("hero-city-frame")
+    && css.includes(".hero-city-frame")
+    && css.includes("overflow: hidden")
+    && css.includes("object-fit: cover")
+    && css.includes(".hero-city-frame { right: 105px; }")
+    && css.includes("left: -447px")
+    && css.includes("width: 1398px")
+    && css.includes("max-width: none")
+    && css.includes("height: 874px"),
+  "The mobile hero restores the Figma-derived wide crop inside a bounded frame, preserving composition without creating page-level horizontal scrolling.",
+);
+record(
+  "PRODUCTION_SECURITY_HEADERS",
+  nextConfig.includes("X-Content-Type-Options")
+    && nextConfig.includes("X-Frame-Options")
+    && nextConfig.includes("Referrer-Policy")
+    && nextConfig.includes("Permissions-Policy"),
+  "Baseline response-hardening headers are configured for all routes.",
+);
+record(
+  "HEALTH_ENDPOINT",
+  healthRoute.includes('status: "ok"')
+    && healthRoute.includes('service: "law-society-intern-test"')
+    && healthRoute.includes('"Cache-Control": "no-store"')
+    && !healthRoute.includes("GUARDIAN_API_KEY:"),
+  "A no-store health endpoint reports service state without exposing secret values.",
+);
 
 record(
   "NAV_SCROLLABLE_VIEWPORT",
