@@ -1,4 +1,27 @@
-# Law Society Web Intern Test
+# Law Society Website — Responsive Next.js Technical Exercise
+
+**Portfolio case study · Next.js, TypeScript, Tailwind CSS, accessibility, server-side API integration**
+
+[**Live interactive demo**](https://law-society-intern-test.vercel.app/) · [Source code](https://github.com/Bjorjank/law-society-intern-test)
+
+This independent technical assessment recreates a supplied homepage design for desktop and mobile, with keyboard-accessible navigation and a resilient Guardian news integration. It demonstrates frontend implementation, API boundaries, responsive layouts, fallback states, and build/verification tooling.
+
+### Engineering highlights
+
+- **Interaction and accessibility:** Responsive navigation, keyboard focus management, dialogs, and interactive carousel controls.
+- **Backend integration:** Server-side Guardian API access; fixture mode allows local review without credentials.
+- **Failure handling:** Explicit loading/error/retry paths isolate upstream API failures.
+- **Reproducibility:** Project scripts document asset verification, lint, type-check, production build, and smoke checks.
+
+**Disclosure:** This is a **technical exercise**, **not** an official Law Society of Singapore website and **not** evidence of employment or endorsement by the organization. Some content and design assets came from the supplied assessment; placeholder copy is retained for design fidelity. No claim is made that the live site serves real customers.
+
+### Reproduce locally
+
+Use the setup and verification instructions below. To run without a Guardian API key, set `NEWS_USE_FIXTURE=true` in `.env.local`. Do not place API keys in public environment variables.
+
+---
+
+## Full technical documentation
 
 A responsive implementation of the supplied Law Society homepage mockup, built with Next.js, TypeScript, Tailwind CSS, local Figma assets, and the Guardian Open Platform API.
 
